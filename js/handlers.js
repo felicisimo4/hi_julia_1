@@ -8,6 +8,19 @@ import { leaderboard } from './leaderboard.js';
 // Global interval for image cycling
 let imageCycleInterval = null;
 
+// Preload all cycling images for instant switching
+function preloadImages() {
+    IMAGES.defaultImages.forEach(imageSrc => {
+        const img = new Image();
+        img.src = imageSrc;
+    });
+    // Also preload success image
+    const successImg = new Image();
+    successImg.src = IMAGES.success;
+
+    console.log('Preloaded', IMAGES.defaultImages.length + 1, 'images for instant switching');
+}
+
 // Update love tier hint based on current love count
 function updateLoveTierHint(loveCount) {
     const tierHintText = document.getElementById('tierHintText');
@@ -247,6 +260,9 @@ export function handleReset() {
 
 // Initialize page
 function init() {
+    // Preload all images for instant switching
+    preloadImages();
+
     // Load love count from localStorage
     const loveCount = state.loadLoveCount();
     updateLoveDisplay(loveCount);
