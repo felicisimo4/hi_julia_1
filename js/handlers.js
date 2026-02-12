@@ -2,7 +2,7 @@
 
 import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS } from './config.js';
 import { state } from './state.js';
-import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, swapImage } from './animations.js';
+import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateLoveGlow, swapImage } from './animations.js';
 
 // Global interval for image cycling
 let imageCycleInterval = null;
@@ -61,6 +61,7 @@ export function handleYes() {
     // Increment love meter
     const newCount = state.incrementLove();
     updateLoveDisplay(newCount);
+    updateLoveGlow(newCount);
 
     // Create appropriate animation based on love tier
     const yesButton = document.getElementById('yesButton');
@@ -108,6 +109,7 @@ function init() {
     // Load love count from localStorage
     const loveCount = state.loadLoveCount();
     updateLoveDisplay(loveCount);
+    updateLoveGlow(loveCount);
 
     // Update love tier hint based on current love count
     updateLoveTierHint(loveCount);

@@ -103,6 +103,24 @@ export function updateLoveDisplay(count) {
     document.getElementById('loveCount').textContent = count;
 }
 
+// Update container glow effect based on love count
+export function updateLoveGlow(count) {
+    const container = document.querySelector('.container');
+
+    // Determine glow level based on love count
+    let glowLevel = 0;
+    if (count >= 50) {
+        glowLevel = 3; // Maximum glow at 50+ clicks
+    } else if (count >= 10) {
+        glowLevel = 2; // Medium glow at 10-49 clicks
+    } else if (count >= 1) {
+        glowLevel = 1; // Gentle glow at 1-9 clicks
+    }
+
+    // Set the data attribute to trigger CSS glow
+    container.setAttribute('data-love-glow', glowLevel);
+}
+
 // Swap image with fallback support
 export function swapImage(imageId, newSrc, fallbackSrc) {
     const img = document.getElementById(imageId);
