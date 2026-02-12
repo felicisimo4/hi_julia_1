@@ -21,16 +21,18 @@ Unlock new animations as love grows:
 
 | Tier | Clicks | Animation | Unlock Message |
 |------|--------|-----------|----------------|
-| 0 | 1-9 | 🦦 Solo Otter | "Surprise awaits at 10 clicks!" |
-| 1 | 10-49 | 🦦🐑 Otter & Sheep | "Surprise awaits at 50 clicks!" |
-| 2 | 50+ | 🐑💋🦦 Kissing Love | "You've unlocked all surprises!" |
+| 1 | 1-9 | 🦦 Solo Otter | "Surprise awaits at 10 clicks!" |
+| 2 | 10-49 | 🦦🐑 Otter & Sheep | "Surprise awaits at 50 clicks!" |
+| 3 | 50-499 | 🐑💋🦦 Kissing Love | "Surprise awaits at 500 clicks!" |
+| 4 | 500+ | 🐍 Orbital Snakes | "You've unlocked all surprises!" |
 
 ### Progressive Visual Effects
 Container glow intensifies with love:
 - **Level 0** (0 clicks): Clean white container
 - **Level 1** (1-9 clicks): Gentle red glow with pulse
 - **Level 2** (10-49 clicks): Medium pink radiance
-- **Level 3** (50+ clicks): Maximum multi-layer glow
+- **Level 3** (50-499 clicks): Maximum multi-layer glow
+- **Level 4** (500+ clicks): Rainbow glow with orbital snakes
 
 ### Tactile Button Feedback
 - Buttons lift on hover (-2px)
@@ -80,9 +82,10 @@ Simply open `index.html` in any modern browser:
 
 - **Click "Yes"** → Increment love meter, see animations, get messages
 - **Click "No"** → Grow the Yes button, cycle pleading messages
-- **Reach 10 clicks** → Unlock sheep animations! 🐑
-- **Reach 50 clicks** → Unlock kissing love! 💋
-- **Click "Reset Meter"** → Start over (requires confirmation)
+- **Reach 10 clicks** → Unlock Tier 2: Sheep animations! 🐑
+- **Reach 50 clicks** → Unlock Tier 3: Kissing love! 💋
+- **Reach 500 clicks** → Unlock Tier 4: Orbital snakes! 🐍
+- **Click "Emulate First Yes"** → Replay the experience (keeps your score)
 
 ## 🎮 How It Works
 
@@ -91,13 +94,15 @@ Simply open `index.html` in any modern browser:
 ```
 Start → Images Cycle (3s interval)
   ↓
-Click "No" → Button grows → Pleading messages
+Click "No" → Button grows → Pleading messages → Images change
   ↓
-Click "Yes" → Love meter +1 → Otter floats up → Glow level increases
+Click "Yes" → Love meter +1 → Otter floats up → Glow increases
   ↓
-10 clicks → Sheep unlock! 🐑
+10 clicks → Tier 2: Sheep unlock! 🐑
   ↓
-50 clicks → Kissing animation! 💋
+50 clicks → Tier 3: Kissing animation! 💋
+  ↓
+500 clicks → Tier 4: Orbital snakes! 🐍
   ↓
 ∞ clicks → Keep going! Each click shows new message
 ```
@@ -210,12 +215,12 @@ hi_julia_1/
 
 | Metric | Value |
 |--------|-------|
-| Total Lines of Code | ~650 |
-| HTML | 34 lines |
-| CSS | 280 lines (3 files) |
-| JavaScript | 340 lines (4 files) |
+| Total Lines of Code | ~900 |
+| HTML | 50 lines |
+| CSS | 400 lines (3 files) |
+| JavaScript | 450 lines (6 files) |
 | Images | 19 (18 cycling + 1 success) |
-| Love Tiers | 3 unlockable |
+| Love Tiers | 4 unlockable |
 | Success Messages | 20 variations |
 | Pleading Messages | 6 cycling |
 

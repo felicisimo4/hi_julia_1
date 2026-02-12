@@ -24,11 +24,11 @@ function updateLoveTierHint(loveCount) {
         tierHintText.textContent = LOVE_TIERS.maxTier.message;
     }
 
-    // Build tier list
+    // Build tier list (1-indexed for users)
     const tiers = [
-        { threshold: LOVE_TIERS.tier1.threshold, name: LOVE_TIERS.tier1.name, icon: '🐑' },
-        { threshold: LOVE_TIERS.tier2.threshold, name: LOVE_TIERS.tier2.name, icon: '💋' },
-        { threshold: LOVE_TIERS.tier3.threshold, name: LOVE_TIERS.tier3.name, icon: '🐍' }
+        { tierNum: 2, threshold: LOVE_TIERS.tier1.threshold, name: LOVE_TIERS.tier1.name, icon: '🐑' },
+        { tierNum: 3, threshold: LOVE_TIERS.tier2.threshold, name: LOVE_TIERS.tier2.name, icon: '💋' },
+        { tierNum: 4, threshold: LOVE_TIERS.tier3.threshold, name: LOVE_TIERS.tier3.name, icon: '🐍' }
     ];
 
     tierList.innerHTML = tiers.map(tier => {
@@ -41,7 +41,7 @@ function updateLoveTierHint(loveCount) {
             <div class="tier-item ${statusClass}">
                 <span class="tier-item-icon">${tier.icon}</span>
                 <span class="tier-item-text">
-                    ${statusIcon} ${tier.name}${thresholdText}
+                    ${statusIcon} Tier ${tier.tierNum}: ${tier.name}${thresholdText}
                 </span>
             </div>
         `;
