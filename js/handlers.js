@@ -240,6 +240,23 @@ function init() {
         updateLeaderboardDisplay();
     });
 
+    // Listen for love count sync from Firebase
+    window.addEventListener('loveCountSync', (event) => {
+        const syncedCount = event.detail.count;
+        // Update state
+        state.loveCount = syncedCount;
+        // Update all UI elements
+        updateLoveDisplay(syncedCount);
+        updateLoveGlow(syncedCount);
+        updateLoveMeterColor(syncedCount);
+        updateLoveTierHint(syncedCount);
+        // Show success image if count > 0
+        if (syncedCount > 0) {
+            swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
+        }
+        console.log('Love count synced from Firebase:', syncedCount);
+    });
+
     // Attach event handlers
     document.getElementById('yesButton').addEventListener('click', handleYes);
     document.querySelector('.btn-no').addEventListener('click', handleNo);

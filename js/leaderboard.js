@@ -37,6 +37,9 @@ class LeaderboardManager {
 
             // Set up real-time listener
             this.listenToFirebase();
+
+            // Perform initial sync
+            this.performInitialSync();
         } catch (error) {
             console.error('Firebase initialization failed:', error);
             console.log('Falling back to localStorage');
@@ -53,10 +56,60 @@ class LeaderboardManager {
                 this.scores = firebaseScores;
                 // Also update localStorage cache
                 localStorage.setItem('leaderboard', JSON.stringify(firebaseScores));
+
+                // Sync love count with user's leaderboard score
+                this.syncLoveCountWithLeaderboard();
+
                 // Update UI
                 const event = new CustomEvent('leaderboardUpdate');
                 window.dispatchEvent(event);
             }
+        });
+    }
+
+    // Sync loveCount with the current user's leaderboard score
+    syncLoveCountWithLeaderboard() {
+        const user = this.getCurrentUser();
+        const leaderboardScore = this.scores[user] || 0;
+        const localLoveCount = parseInt(localStorage.getItem('loveCount')) || 0;
+
+        // Use the higher of the two scores (in case local is ahead)
+        const syncedScore = Math.max(leaderboardScore, localLoveCount);
+
+        // Update localStorage if Firebase has a higher score
+        if (syncedScore > localLoveCount) {
+            localStorage.setItem('loveCount', syncedScore);
+            // Dispatch event to update UI
+            const event = new CustomEvent('loveCountSync', { detail: { count: syncedScore } });
+            window.dispatchEvent(event);
+        }
+
+        // Update Firebase if local has a higher score
+        if (syncedScore > leaderboardScore) {
+            this.updateScore(syncedScore);
+        }
+    }
+
+    // Perform initial sync on page load
+    performInitialSync() {
+        if (!this.firebaseInitialized) return;
+
+        // Fetch current data from Firebase
+        this.database.ref('leaderboard').once('value').then((snapshot) => {
+            const firebaseScores = snapshot.val();
+            if (firebaseScores) {
+                this.scores = firebaseScores;
+                localStorage.setItem('leaderboard', JSON.stringify(firebaseScores));
+                this.syncLoveCountWithLeaderboard();
+
+                // Update UI
+                const event = new CustomEvent('leaderboardUpdate');
+                window.dispatchEvent(event);
+
+                console.log('Initial Firebase sync complete');
+            }
+        }).catch((error) => {
+            console.error('Initial Firebase sync failed:', error);
         });
     }
 
