@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Webpage</title>
+    <title>Valentine's Day</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #ffe6f0;
         }
 
         .container {
@@ -32,10 +32,18 @@
             margin-bottom: 30px;
         }
 
+        .message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d63384;
+            margin-bottom: 30px;
+        }
+
         .button-container {
             display: flex;
             gap: 20px;
             justify-content: center;
+            align-items: center;
         }
 
         button {
@@ -47,42 +55,56 @@
             transition: all 0.3s ease;
         }
 
-        .btn-primary {
-            background-color: #007bff;
+        .btn-yes {
+            background-color: #dc3545;
             color: white;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
+        .btn-yes:hover {
+            background-color: #bb2d3b;
         }
 
-        .btn-secondary {
+        .btn-no {
             background-color: #6c757d;
             color: white;
         }
 
-        .btn-secondary:hover {
+        .btn-no:hover {
             background-color: #545b62;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://via.placeholder.com/400x300/4A90E2/ffffff?text=Your+Image+Here" alt="Placeholder Image">
+        <img id="valentineImage" src="https://via.placeholder.com/400x300/FF69B4/ffffff?text=Be+My+Valentine" alt="Valentine Image">
+
+        <div class="message">Will you be my valentine this year?</div>
 
         <div class="button-container">
-            <button class="btn-primary" onclick="handleButton1()">Button 1</button>
-            <button class="btn-secondary" onclick="handleButton2()">Button 2</button>
+            <button id="yesButton" class="btn-yes" onclick="handleYes()">Yes</button>
+            <button class="btn-no" onclick="handleNo()">No</button>
         </div>
     </div>
 
     <script>
-        function handleButton1() {
-            alert('Button 1 clicked!');
+        let yesPadding = 12;
+        let yesFontSize = 16;
+
+        function handleYes() {
+            // Change the image
+            document.getElementById('valentineImage').src = 'https://via.placeholder.com/400x300/FF1493/ffffff?text=Thank+You!+%E2%9D%A4%EF%B8%8F';
+            // Update message
+            document.querySelector('.message').textContent = 'Yay! I knew you would say yes! ❤️';
         }
 
-        function handleButton2() {
-            alert('Button 2 clicked!');
+        function handleNo() {
+            // Make the Yes button bigger
+            yesPadding += 5;
+            yesFontSize += 2;
+
+            const yesButton = document.getElementById('yesButton');
+            yesButton.style.padding = yesPadding + 'px ' + (yesPadding * 2.5) + 'px';
+            yesButton.style.fontSize = yesFontSize + 'px';
         }
     </script>
 </body>
