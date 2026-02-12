@@ -237,9 +237,19 @@ class LeaderboardManager {
         return leaderboard.map((entry, index) => {
             const currentClass = entry.isCurrent ? 'current-user' : '';
 
+            // Add user-specific color class
+            let userClass = '';
+            if (entry.name === USER_IDENTITIES.MANNY) {
+                userClass = 'user-manny';
+            } else if (entry.name === USER_IDENTITIES.JULIA) {
+                userClass = 'user-julia';
+            } else if (entry.name === USER_IDENTITIES.OTHER) {
+                userClass = 'user-other';
+            }
+
             return `
                 <div class="leaderboard-entry">
-                    <span class="leaderboard-name ${currentClass}">
+                    <span class="leaderboard-name ${userClass} ${currentClass}">
                         ${entry.name}
                     </span>
                     <span class="leaderboard-score">${entry.score} 💕</span>
