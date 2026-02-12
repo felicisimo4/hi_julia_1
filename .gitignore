@@ -1,4 +1,14 @@
-# User-uploaded custom images
-assets/images/custom/*
+# Development files
+node_modules/
+package.json
+package-lock.json
+convert-heic.js
+
+# Temporary files
+assets/images/custom/*.zip
+
+# Keep custom image directories
 !assets/images/custom/.gitkeep
 !assets/images/custom/README.md
+!assets/images/custom/cycling/
+!assets/images/custom/success/

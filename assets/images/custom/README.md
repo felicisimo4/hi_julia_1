@@ -2,12 +2,15 @@
 
 Upload your personal Valentine's Day photos here!
 
+## Directory Structure
+
+- **`cycling/`** - Contains 18 images that cycle every 3 seconds on the main page
+- **`success/`** - Contains the success image shown after clicking "Yes"
+
 ## Required Images
 
-You need **2 images** with these exact filenames:
-
-1. **`valentine-default.jpg`** - The initial image shown when the page loads
-2. **`valentine-success.jpg`** - The image shown after clicking "Yes"
+- **Cycling images:** 18 images in the `cycling/` directory (already uploaded)
+- **Success image:** 1 image named `valentine-success.jpg` in the `success/` directory
 
 ## Supported Formats
 
@@ -17,19 +20,19 @@ You need **2 images** with these exact filenames:
 
 If using a different format, update the file extension in `/js/config.js`
 
-## How to Upload
+## How to Upload Success Image
 
-1. **Prepare your images:**
-   - Choose 2 photos you want to display
-   - Rename them exactly as shown above
+1. **Prepare your success image:**
+   - Choose the photo to display after "Yes" is clicked
+   - Name it `valentine-success.jpg`
 
-2. **Upload to this folder:**
-   - Drag and drop the images into this `custom/` folder
-   - Or use your preferred method to copy them here
+2. **Upload to success folder:**
+   - Copy to: `assets/images/custom/success/valentine-success.jpg`
+   - Docker command: `docker cp ./valentine-success.jpg d4d0ac6b537b:/workspaces/ff/hi_julia_1/assets/images/custom/success/`
 
 3. **Refresh the webpage:**
    - Open `index.html` in your browser
-   - Your custom images should now appear!
+   - Click "Yes" to see your success image!
 
 ## Image Specifications
 
