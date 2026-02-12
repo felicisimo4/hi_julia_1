@@ -131,8 +131,8 @@ function stopImageCycling() {
 
 // Handle Yes button click
 export function handleYes() {
-    // Stop image cycling on first click
-    if (state.loveCount === 0) {
+    // Stop image cycling and show success image on first Yes in current session
+    if (state.honeymoonCount === 0) {
         stopImageCycling();
         // Change to success image on first click
         swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
