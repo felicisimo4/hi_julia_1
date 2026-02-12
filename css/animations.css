@@ -93,163 +93,139 @@
     pointer-events: none;
     z-index: 999;
     bottom: 0;
+    --peak-height: 300px; /* Dynamic, set via JS */
 }
 
 .orbital-snake-left {
-    animation: snakeOrbitalLeft 8s ease-in-out infinite;
+    animation: snakeOrbitalLeft 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
 }
 
 .orbital-snake-right {
-    animation: snakeOrbitalRight 8s ease-in-out infinite;
+    animation: snakeOrbitalRight 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
 }
 
+/* Smooth parabolic arc from left to right */
 @keyframes snakeOrbitalLeft {
     0% {
         left: -100px;
         bottom: 0;
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) rotate(-45deg);
         opacity: 0;
     }
-    10% {
+    5% {
         opacity: 1;
+        transform: translateY(0) rotate(-30deg);
+    }
+    15% {
+        left: 15%;
+        bottom: calc(var(--peak-height) * 0.55);
+        transform: translateY(0) rotate(-10deg);
     }
     25% {
         left: 25%;
-        bottom: 150px;
-        transform: translateY(-50px) rotate(15deg);
+        bottom: calc(var(--peak-height) * 0.8);
+        transform: translateY(0) rotate(5deg);
+    }
+    35% {
+        left: 35%;
+        bottom: calc(var(--peak-height) * 0.95);
+        transform: translateY(0) rotate(15deg);
     }
     50% {
         left: 50%;
-        bottom: 250px;
-        transform: translateY(-100px) rotate(30deg);
+        bottom: var(--peak-height);
+        transform: translateY(0) rotate(20deg);
+    }
+    65% {
+        left: 65%;
+        bottom: calc(var(--peak-height) * 0.95);
+        transform: translateY(0) rotate(25deg);
     }
     75% {
         left: 75%;
-        bottom: 150px;
-        transform: translateY(-50px) rotate(15deg);
+        bottom: calc(var(--peak-height) * 0.8);
+        transform: translateY(0) rotate(35deg);
     }
-    90% {
+    85% {
+        left: 85%;
+        bottom: calc(var(--peak-height) * 0.55);
+        transform: translateY(0) rotate(50deg);
+    }
+    95% {
         opacity: 1;
+        transform: translateY(0) rotate(60deg);
     }
     100% {
         left: 110%;
         bottom: 0;
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) rotate(75deg);
         opacity: 0;
     }
 }
 
+/* Smooth parabolic arc from right to left */
 @keyframes snakeOrbitalRight {
     0% {
         right: -100px;
         bottom: 0;
-        transform: translateY(0) rotate(0deg) scaleX(-1);
+        transform: translateY(0) rotate(45deg) scaleX(-1);
         opacity: 0;
     }
-    10% {
+    5% {
         opacity: 1;
+        transform: translateY(0) rotate(30deg) scaleX(-1);
+    }
+    15% {
+        right: 15%;
+        bottom: calc(var(--peak-height) * 0.55);
+        transform: translateY(0) rotate(10deg) scaleX(-1);
     }
     25% {
         right: 25%;
-        bottom: 180px;
-        transform: translateY(-60px) rotate(-12deg) scaleX(-1);
+        bottom: calc(var(--peak-height) * 0.8);
+        transform: translateY(0) rotate(-5deg) scaleX(-1);
+    }
+    35% {
+        right: 35%;
+        bottom: calc(var(--peak-height) * 0.95);
+        transform: translateY(0) rotate(-15deg) scaleX(-1);
     }
     50% {
         right: 50%;
-        bottom: 280px;
-        transform: translateY(-110px) rotate(-25deg) scaleX(-1);
+        bottom: var(--peak-height);
+        transform: translateY(0) rotate(-20deg) scaleX(-1);
+    }
+    65% {
+        right: 65%;
+        bottom: calc(var(--peak-height) * 0.95);
+        transform: translateY(0) rotate(-25deg) scaleX(-1);
     }
     75% {
         right: 75%;
-        bottom: 180px;
-        transform: translateY(-60px) rotate(-12deg) scaleX(-1);
+        bottom: calc(var(--peak-height) * 0.8);
+        transform: translateY(0) rotate(-35deg) scaleX(-1);
     }
-    90% {
+    85% {
+        right: 85%;
+        bottom: calc(var(--peak-height) * 0.55);
+        transform: translateY(0) rotate(-50deg) scaleX(-1);
+    }
+    95% {
         opacity: 1;
+        transform: translateY(0) rotate(-60deg) scaleX(-1);
     }
     100% {
         right: 110%;
         bottom: 0;
-        transform: translateY(0) rotate(0deg) scaleX(-1);
+        transform: translateY(0) rotate(-75deg) scaleX(-1);
         opacity: 0;
     }
 }
 
-/* Mobile snake animations */
+/* Mobile snake animations - smaller arcs */
 @media screen and (max-width: 430px) {
     .orbital-snake {
         font-size: 40px;
-    }
-
-    @keyframes snakeOrbitalLeft {
-        0% {
-            left: -80px;
-            bottom: 0;
-            transform: translateY(0) rotate(0deg);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        25% {
-            left: 25%;
-            bottom: 100px;
-            transform: translateY(-30px) rotate(15deg);
-        }
-        50% {
-            left: 50%;
-            bottom: 150px;
-            transform: translateY(-60px) rotate(30deg);
-        }
-        75% {
-            left: 75%;
-            bottom: 100px;
-            transform: translateY(-30px) rotate(15deg);
-        }
-        90% {
-            opacity: 1;
-        }
-        100% {
-            left: 110%;
-            bottom: 0;
-            transform: translateY(0) rotate(0deg);
-            opacity: 0;
-        }
-    }
-
-    @keyframes snakeOrbitalRight {
-        0% {
-            right: -80px;
-            bottom: 0;
-            transform: translateY(0) rotate(0deg) scaleX(-1);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        25% {
-            right: 25%;
-            bottom: 120px;
-            transform: translateY(-40px) rotate(-12deg) scaleX(-1);
-        }
-        50% {
-            right: 50%;
-            bottom: 170px;
-            transform: translateY(-70px) rotate(-25deg) scaleX(-1);
-        }
-        75% {
-            right: 75%;
-            bottom: 120px;
-            transform: translateY(-40px) rotate(-12deg) scaleX(-1);
-        }
-        90% {
-            opacity: 1;
-        }
-        100% {
-            right: 110%;
-            bottom: 0;
-            transform: translateY(0) rotate(0deg) scaleX(-1);
-            opacity: 0;
-        }
+        --peak-height: 200px; /* Lower arcs on mobile */
     }
 }

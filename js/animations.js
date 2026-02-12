@@ -153,17 +153,27 @@ export function updateLoveMeterColor(count) {
 
 // Create orbital snake animation (500+ clicks)
 export function createOrbitalSnake() {
+    // Random peak height for left snake (200px to 450px on desktop, 120px to 280px on mobile)
+    const isMobile = window.innerWidth <= 430;
+    const minHeight = isMobile ? 120 : 200;
+    const maxHeight = isMobile ? 280 : 450;
+    const leftPeakHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+
     // Create left-moving snake
     const snakeLeft = document.createElement('div');
     snakeLeft.className = 'orbital-snake orbital-snake-left';
     snakeLeft.textContent = '🐍';
+    snakeLeft.style.setProperty('--peak-height', `${leftPeakHeight}px`);
     document.body.appendChild(snakeLeft);
 
-    // Create right-moving snake (slightly delayed)
+    // Create right-moving snake (slightly delayed, different random height)
     setTimeout(() => {
+        const rightPeakHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+
         const snakeRight = document.createElement('div');
         snakeRight.className = 'orbital-snake orbital-snake-right';
         snakeRight.textContent = '🐍';
+        snakeRight.style.setProperty('--peak-height', `${rightPeakHeight}px`);
         document.body.appendChild(snakeRight);
 
         // Remove after animation completes
