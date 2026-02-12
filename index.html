@@ -36,7 +36,15 @@
             font-size: 24px;
             font-weight: bold;
             color: #d63384;
+            margin-bottom: 15px;
+        }
+
+        .submessage {
+            font-size: 18px;
+            font-style: italic;
+            color: #e83e8c;
             margin-bottom: 30px;
+            min-height: 25px;
         }
 
         .button-container {
@@ -79,6 +87,7 @@
         <img id="valentineImage" src="https://via.placeholder.com/400x300/FF69B4/ffffff?text=Be+My+Valentine" alt="Valentine Image">
 
         <div class="message">Will you be my valentine this year?</div>
+        <div id="submessage" class="submessage"></div>
 
         <div class="button-container">
             <button id="yesButton" class="btn-yes" onclick="handleYes()">Yes</button>
@@ -89,12 +98,24 @@
     <script>
         let yesPadding = 12;
         let yesFontSize = 16;
+        let messageIndex = 0;
+
+        const pleadingMessages = [
+            "Are you sure you don't want to be my valentine? Please be my valentine.",
+            "But... but... I really want you to say yes! 🥺",
+            "Please reconsider! It would make me so happy! 💕",
+            "Come on, just click yes! You know you want to! 😊",
+            "I'll be so sad if you say no... Pretty please? 🙏",
+            "The Yes button is getting bigger for a reason! 💝"
+        ];
 
         function handleYes() {
             // Change the image
             document.getElementById('valentineImage').src = 'https://via.placeholder.com/400x300/FF1493/ffffff?text=Thank+You!+%E2%9D%A4%EF%B8%8F';
             // Update message
             document.querySelector('.message').textContent = 'Yay! I knew you would say yes! ❤️';
+            // Clear submessage
+            document.getElementById('submessage').textContent = '';
         }
 
         function handleNo() {
@@ -105,6 +126,10 @@
             const yesButton = document.getElementById('yesButton');
             yesButton.style.padding = yesPadding + 'px ' + (yesPadding * 2.5) + 'px';
             yesButton.style.fontSize = yesFontSize + 'px';
+
+            // Show alternating pleading messages
+            document.getElementById('submessage').textContent = pleadingMessages[messageIndex];
+            messageIndex = (messageIndex + 1) % pleadingMessages.length;
         }
     </script>
 </body>
