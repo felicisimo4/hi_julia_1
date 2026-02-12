@@ -10,21 +10,48 @@ let imageCycleInterval = null;
 
 // Update love tier hint based on current love count
 function updateLoveTierHint(loveCount) {
-    const hintElement = document.getElementById('loveTierHint');
+    const tierHintText = document.getElementById('tierHintText');
+    const tierList = document.getElementById('tierList');
 
+    // Update header text
     if (loveCount < LOVE_TIERS.tier1.threshold) {
-        hintElement.textContent = LOVE_TIERS.tier1.hint;
-        hintElement.style.display = 'block';
+        tierHintText.textContent = LOVE_TIERS.tier1.hint;
     } else if (loveCount < LOVE_TIERS.tier2.threshold) {
-        hintElement.textContent = LOVE_TIERS.tier2.hint;
-        hintElement.style.display = 'block';
+        tierHintText.textContent = LOVE_TIERS.tier2.hint;
     } else if (loveCount < LOVE_TIERS.tier3.threshold) {
-        hintElement.textContent = LOVE_TIERS.tier3.hint;
-        hintElement.style.display = 'block';
+        tierHintText.textContent = LOVE_TIERS.tier3.hint;
     } else {
-        hintElement.textContent = LOVE_TIERS.maxTier.message;
-        hintElement.style.display = 'block';
+        tierHintText.textContent = LOVE_TIERS.maxTier.message;
     }
+
+    // Build tier list
+    const tiers = [
+        { threshold: LOVE_TIERS.tier1.threshold, name: LOVE_TIERS.tier1.name, icon: '🐑' },
+        { threshold: LOVE_TIERS.tier2.threshold, name: LOVE_TIERS.tier2.name, icon: '💋' },
+        { threshold: LOVE_TIERS.tier3.threshold, name: LOVE_TIERS.tier3.name, icon: '🐍' }
+    ];
+
+    tierList.innerHTML = tiers.map(tier => {
+        const unlocked = loveCount >= tier.threshold;
+        const statusClass = unlocked ? 'unlocked' : 'locked';
+        const statusIcon = unlocked ? '✓' : '🔒';
+        const thresholdText = unlocked ? '' : `<span class="tier-item-threshold">(unlock at ${tier.threshold})</span>`;
+
+        return `
+            <div class="tier-item ${statusClass}">
+                <span class="tier-item-icon">${tier.icon}</span>
+                <span class="tier-item-text">
+                    ${statusIcon} ${tier.name}${thresholdText}
+                </span>
+            </div>
+        `;
+    }).join('');
+}
+
+// Toggle tier hint dropdown
+function toggleTierHint() {
+    const hintElement = document.getElementById('loveTierHint');
+    hintElement.classList.toggle('expanded');
 }
 
 // Update leaderboard display
@@ -262,6 +289,7 @@ function init() {
     document.querySelector('.btn-no').addEventListener('click', handleNo);
     document.getElementById('resetButton').addEventListener('click', handleReset);
     document.getElementById('shareButton').addEventListener('click', handleShare);
+    document.getElementById('tierHintHeader').addEventListener('click', toggleTierHint);
 
     // Restore Yes button size if previously grown (from "No" clicks)
     if (state.noClickCount > 0) {
