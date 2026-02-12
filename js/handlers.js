@@ -2,7 +2,7 @@
 
 import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS, BUTTON_GROWTH } from './config.js';
 import { state } from './state.js';
-import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateHoneymoonDisplay, updateLoveGlow, swapImage, updateLoveMeterColor, createOrbitalSnake } from './animations.js';
+import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateHoneymoonDisplay, updateLoveGlow, swapImage, updateLoveMeterColor, createOrbitalSnake, createKneelingAnimation, createFireworksAnimation } from './animations.js';
 import { leaderboard } from './leaderboard.js';
 
 // Global interval for image cycling
@@ -33,6 +33,10 @@ function updateLoveTierHint(loveCount) {
         tierHintText.textContent = LOVE_TIERS.tier2.hint;
     } else if (loveCount < LOVE_TIERS.tier3.threshold) {
         tierHintText.textContent = LOVE_TIERS.tier3.hint;
+    } else if (loveCount < LOVE_TIERS.tier4.threshold) {
+        tierHintText.textContent = LOVE_TIERS.tier4.hint;
+    } else if (loveCount < LOVE_TIERS.tier5.threshold) {
+        tierHintText.textContent = LOVE_TIERS.tier5.hint;
     } else {
         tierHintText.textContent = LOVE_TIERS.maxTier.message;
     }
@@ -41,7 +45,9 @@ function updateLoveTierHint(loveCount) {
     const tiers = [
         { tierNum: 2, threshold: LOVE_TIERS.tier1.threshold, name: LOVE_TIERS.tier1.name, icon: '🐑' },
         { tierNum: 3, threshold: LOVE_TIERS.tier2.threshold, name: LOVE_TIERS.tier2.name, icon: '💋' },
-        { tierNum: 4, threshold: LOVE_TIERS.tier3.threshold, name: LOVE_TIERS.tier3.name, icon: '🐍' }
+        { tierNum: 4, threshold: LOVE_TIERS.tier3.threshold, name: LOVE_TIERS.tier3.name, icon: '🐍' },
+        { tierNum: 5, threshold: LOVE_TIERS.tier4.threshold, name: LOVE_TIERS.tier4.name, icon: '🧎' },
+        { tierNum: 6, threshold: LOVE_TIERS.tier5.threshold, name: LOVE_TIERS.tier5.name, icon: '🎆' }
     ];
 
     tierList.innerHTML = tiers.map(tier => {
@@ -159,7 +165,18 @@ export function handleYes() {
 
     // Create appropriate animation based on love tier
     const yesButton = document.getElementById('yesButton');
-    if (newCount >= 500) {
+    if (newCount >= LOVE_TIERS.tier5.threshold) {
+        // 5000+ clicks: fireworks + all previous animations
+        createFireworksAnimation();
+        createKneelingAnimation();
+        createOrbitalSnake();
+        createKissingLove(yesButton);
+    } else if (newCount >= LOVE_TIERS.tier4.threshold) {
+        // 2000+ clicks: kneeling + snakes + kissing
+        createKneelingAnimation();
+        createOrbitalSnake();
+        createKissingLove(yesButton);
+    } else if (newCount >= LOVE_TIERS.tier3.threshold) {
         // 500+ clicks: snakes orbital animation + kissing
         createOrbitalSnake();
         createKissingLove(yesButton);

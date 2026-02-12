@@ -86,6 +86,69 @@
     }
 }
 
+/* Kneeling devotion animation (2000+ clicks) */
+.kneeling-emoji {
+    position: fixed;
+    font-size: 60px;
+    pointer-events: none;
+    z-index: 1000;
+    animation: kneelingFade 4s ease-in-out forwards;
+}
+
+@keyframes kneelingFade {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+    }
+    25% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    75% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) rotate(10deg);
+    }
+}
+
+/* Fireworks animation (5000+ clicks) */
+.firework-emoji {
+    position: fixed;
+    font-size: 80px;
+    pointer-events: none;
+    z-index: 1001;
+    animation: fireworkBurst 2s ease-out forwards;
+}
+
+@keyframes fireworkBurst {
+    0% {
+        opacity: 1;
+        transform: scale(0.1) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3) rotate(360deg) translateY(-100px);
+    }
+}
+
+/* Mobile optimizations for new animations */
+@media screen and (max-width: 430px) {
+    .kneeling-emoji {
+        font-size: 50px;
+    }
+
+    .firework-emoji {
+        font-size: 60px;
+    }
+}
+
 /* Snake orbital animations (500+ clicks) */
 .orbital-snake {
     position: fixed;

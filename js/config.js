@@ -89,6 +89,16 @@ export const LOVE_TIERS = {
         name: 'Snake Paradise',
         hint: 'Surprise awaits at 500 clicks! 🐍'
     },
+    tier4: {
+        threshold: 2000,
+        name: 'Sacred Devotion',
+        hint: 'Surprise awaits at 2000 clicks! 🧎'
+    },
+    tier5: {
+        threshold: 5000,
+        name: 'Fireworks Finale',
+        hint: 'Surprise awaits at 5000 clicks! 🎆'
+    },
     maxTier: {
         name: 'Maximum Love',
         message: 'You\'ve unlocked all surprises! 👑'

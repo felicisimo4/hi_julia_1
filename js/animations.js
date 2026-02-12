@@ -151,6 +151,60 @@ export function updateLoveMeterColor(count) {
     }
 }
 
+// Create kneeling devotion animation (2000+ clicks)
+export function createKneelingAnimation() {
+    const kneelingEmojis = ['🧎', '🧎‍♂️', '🧎‍♀️', '🙇', '🙇‍♂️', '🙇‍♀️'];
+
+    // Create 3-6 random kneeling emojis at random positions
+    const count = Math.floor(Math.random() * 4) + 3; // 3 to 6 emojis
+
+    for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+            const emoji = document.createElement('div');
+            emoji.className = 'kneeling-emoji';
+            emoji.textContent = kneelingEmojis[Math.floor(Math.random() * kneelingEmojis.length)];
+
+            // Random position on screen
+            emoji.style.left = (Math.random() * 80 + 10) + '%';
+            emoji.style.top = (Math.random() * 60 + 20) + '%';
+
+            document.body.appendChild(emoji);
+
+            // Remove after animation completes
+            setTimeout(() => {
+                emoji.remove();
+            }, 4000);
+        }, i * 300); // Stagger the appearance
+    }
+}
+
+// Create fireworks animation (5000+ clicks)
+export function createFireworksAnimation() {
+    const fireworkEmojis = ['🎆', '🎇', '✨', '💥', '⭐', '🌟'];
+
+    // Create 8-15 random fireworks at random positions
+    const count = Math.floor(Math.random() * 8) + 8; // 8 to 15 fireworks
+
+    for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+            const firework = document.createElement('div');
+            firework.className = 'firework-emoji';
+            firework.textContent = fireworkEmojis[Math.floor(Math.random() * fireworkEmojis.length)];
+
+            // Random position across entire screen
+            firework.style.left = (Math.random() * 90 + 5) + '%';
+            firework.style.top = (Math.random() * 70 + 10) + '%';
+
+            document.body.appendChild(firework);
+
+            // Remove after animation completes
+            setTimeout(() => {
+                firework.remove();
+            }, 2000);
+        }, i * 100); // Quick succession
+    }
+}
+
 // Create orbital snake animation (500+ clicks)
 export function createOrbitalSnake() {
     // Random peak height for left snake (200px to 450px on desktop, 120px to 280px on mobile)
