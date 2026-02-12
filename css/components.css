@@ -28,7 +28,34 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: translateY(0);
+    overflow: hidden;
+}
+
+/* Button ripple effect on click */
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s, opacity 0.6s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+button:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    transition: width 0s, height 0s, opacity 0.6s;
 }
 
 .btn-yes {
@@ -38,6 +65,15 @@ button {
 
 .btn-yes:hover {
     background-color: #bb2d3b;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-yes:active {
+    background-color: #a02a37;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px) scale(0.98);
+    transition: all 0.05s ease;
 }
 
 .btn-no {
@@ -47,6 +83,15 @@ button {
 
 .btn-no:hover {
     background-color: #545b62;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-no:active {
+    background-color: #464b50;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px) scale(0.98);
+    transition: all 0.05s ease;
 }
 
 .btn-reset {
@@ -61,30 +106,56 @@ button {
     bottom: 20px;
     right: 20px;
     opacity: 0.7;
-    transition: opacity 0.3s ease, background-color 0.3s ease;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn-reset:hover {
     background-color: #5a6268;
     opacity: 1;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-reset:active {
+    background-color: #4e5358;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px) scale(0.97);
+    transition: all 0.05s ease;
 }
 
 /* Yes button at max size - add visual effects */
 .btn-yes.max-size {
-    animation: rainbowGlow 3s ease-in-out infinite, buttonShake 0.5s ease-in-out infinite;
+    animation: rainbowGlow 3s ease-in-out infinite, buttonShake 0.5s ease-in-out infinite, gradientFlow 4s ease infinite;
     background: linear-gradient(45deg, #dc3545, #ff1493, #dc3545, #ff1493);
     background-size: 300% 300%;
+}
+
+.btn-yes.max-size:hover {
+    animation: rainbowGlow 3s ease-in-out infinite, buttonShake 0.3s ease-in-out infinite, gradientFlow 2s ease infinite;
+}
+
+.btn-yes.max-size:active {
+    animation: rainbowGlow 3s ease-in-out infinite, gradientFlow 1s ease infinite;
+    transform: translateY(3px) scale(0.96) rotate(0deg) !important;
+    box-shadow:
+        0 0 15px rgba(220, 53, 69, 0.9),
+        0 0 30px rgba(255, 20, 147, 0.7),
+        0 0 45px rgba(220, 53, 69, 0.5) !important;
+    transition: all 0.05s ease !important;
 }
 
 @keyframes rainbowGlow {
     0%, 100% {
         box-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.2),
             0 0 20px rgba(220, 53, 69, 0.8),
             0 0 40px rgba(255, 20, 147, 0.6),
             0 0 60px rgba(220, 53, 69, 0.4);
     }
     50% {
         box-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.2),
             0 0 30px rgba(255, 20, 147, 0.8),
             0 0 60px rgba(220, 53, 69, 0.6),
             0 0 90px rgba(255, 20, 147, 0.4);
@@ -92,8 +163,14 @@ button {
 }
 
 @keyframes buttonShake {
-    0%, 100% { transform: rotate(-1deg); }
-    50% { transform: rotate(1deg); }
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(0) rotate(1deg); }
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .love-meter {
@@ -212,6 +289,15 @@ button {
         font-size: 10px;
         bottom: 8px;
         right: 8px;
+    }
+
+    /* Enhanced touch feedback for mobile */
+    button:active {
+        transform: translateY(1px) scale(0.98) !important;
+    }
+
+    .btn-yes.max-size:active {
+        transform: translateY(2px) scale(0.96) !important;
     }
 }
 
