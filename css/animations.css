@@ -18,3 +18,28 @@
         opacity: 0;
     }
 }
+
+/* iPhone 16 Pro optimizations */
+@media screen and (max-width: 430px) {
+    .floating-otter {
+        font-size: 36px;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-150px);
+            opacity: 0;
+        }
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 375px) {
+    .floating-otter {
+        font-size: 32px;
+    }
+}

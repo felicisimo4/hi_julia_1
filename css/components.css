@@ -77,3 +77,75 @@ button {
 .love-meter-heart {
     font-size: 20px;
 }
+
+/* iPhone 16 Pro optimizations (393px viewport) */
+@media screen and (max-width: 430px) {
+    .message {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .submessage {
+        font-size: 16px;
+        margin-bottom: 24px;
+        min-height: 22px;
+    }
+
+    .button-container {
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        padding: 14px 32px;
+        font-size: 18px;
+        min-height: 48px; /* Apple's recommended touch target */
+        border-radius: 8px;
+    }
+
+    .love-meter {
+        top: 12px;
+        right: 12px;
+        padding: 12px 16px;
+        min-width: 100px;
+    }
+
+    .love-meter-title {
+        font-size: 12px;
+    }
+
+    .love-meter-count {
+        font-size: 28px;
+    }
+
+    .love-meter-heart {
+        font-size: 18px;
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 375px) {
+    .message {
+        font-size: 18px;
+    }
+
+    .submessage {
+        font-size: 14px;
+    }
+
+    button {
+        padding: 12px 28px;
+        font-size: 16px;
+    }
+
+    .love-meter {
+        top: 10px;
+        right: 10px;
+        padding: 10px 14px;
+        min-width: 90px;
+    }
+
+    .love-meter-count {
+        font-size: 24px;
+    }
+}
