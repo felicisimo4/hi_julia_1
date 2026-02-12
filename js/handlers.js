@@ -2,7 +2,7 @@
 
 import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS, BUTTON_GROWTH } from './config.js';
 import { state } from './state.js';
-import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateHoneymoonDisplay, updateLoveGlow, swapImage } from './animations.js';
+import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateHoneymoonDisplay, updateLoveGlow, swapImage, updateLoveMeterColor, createOrbitalSnake } from './animations.js';
 import { leaderboard } from './leaderboard.js';
 
 // Global interval for image cycling
@@ -17,6 +17,9 @@ function updateLoveTierHint(loveCount) {
         hintElement.style.display = 'block';
     } else if (loveCount < LOVE_TIERS.tier2.threshold) {
         hintElement.textContent = LOVE_TIERS.tier2.hint;
+        hintElement.style.display = 'block';
+    } else if (loveCount < LOVE_TIERS.tier3.threshold) {
+        hintElement.textContent = LOVE_TIERS.tier3.hint;
         hintElement.style.display = 'block';
     } else {
         hintElement.textContent = LOVE_TIERS.maxTier.message;
@@ -101,6 +104,7 @@ export function handleYes() {
     updateLoveDisplay(newCount);
     updateHoneymoonDisplay(honeymoonCount);
     updateLoveGlow(newCount);
+    updateLoveMeterColor(newCount);
 
     // Update leaderboard
     const isNewHigh = leaderboard.updateScore(newCount);
@@ -115,7 +119,11 @@ export function handleYes() {
 
     // Create appropriate animation based on love tier
     const yesButton = document.getElementById('yesButton');
-    if (newCount >= LOVE_TIERS.tier2.threshold) {
+    if (newCount >= 500) {
+        // 500+ clicks: snakes orbital animation + kissing
+        createOrbitalSnake();
+        createKissingLove(yesButton);
+    } else if (newCount >= LOVE_TIERS.tier2.threshold) {
         // 50+ clicks: kissing animation
         createKissingLove(yesButton);
     } else if (newCount >= LOVE_TIERS.tier1.threshold) {
@@ -210,6 +218,7 @@ function init() {
     updateLoveDisplay(loveCount);
     updateHoneymoonDisplay(0); // Honeymoon always starts at 0
     updateLoveGlow(loveCount);
+    updateLoveMeterColor(loveCount);
 
     // Update love tier hint based on current love count
     updateLoveTierHint(loveCount);

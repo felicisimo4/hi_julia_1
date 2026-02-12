@@ -135,3 +135,45 @@ export function swapImage(imageId, newSrc, fallbackSrc) {
     };
     img.src = newSrc;
 }
+
+// Update love meter color based on count
+export function updateLoveMeterColor(count) {
+    const loveMeter = document.querySelector('.love-meter');
+
+    if (count >= 500) {
+        loveMeter.setAttribute('data-love-level', '3');
+    } else if (count >= 50) {
+        loveMeter.setAttribute('data-love-level', '2');
+    } else if (count >= 10) {
+        loveMeter.setAttribute('data-love-level', '1');
+    } else {
+        loveMeter.setAttribute('data-love-level', '0');
+    }
+}
+
+// Create orbital snake animation (500+ clicks)
+export function createOrbitalSnake() {
+    // Create left-moving snake
+    const snakeLeft = document.createElement('div');
+    snakeLeft.className = 'orbital-snake orbital-snake-left';
+    snakeLeft.textContent = '🐍';
+    document.body.appendChild(snakeLeft);
+
+    // Create right-moving snake (slightly delayed)
+    setTimeout(() => {
+        const snakeRight = document.createElement('div');
+        snakeRight.className = 'orbital-snake orbital-snake-right';
+        snakeRight.textContent = '🐍';
+        document.body.appendChild(snakeRight);
+
+        // Remove after animation completes
+        setTimeout(() => {
+            snakeRight.remove();
+        }, 8000);
+    }, 2000);
+
+    // Remove after animation completes
+    setTimeout(() => {
+        snakeLeft.remove();
+    }, 8000);
+}

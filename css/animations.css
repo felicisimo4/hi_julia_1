@@ -85,3 +85,171 @@
         font-size: 32px;
     }
 }
+
+/* Snake orbital animations (500+ clicks) */
+.orbital-snake {
+    position: fixed;
+    font-size: 50px;
+    pointer-events: none;
+    z-index: 999;
+    bottom: 0;
+}
+
+.orbital-snake-left {
+    animation: snakeOrbitalLeft 8s ease-in-out infinite;
+}
+
+.orbital-snake-right {
+    animation: snakeOrbitalRight 8s ease-in-out infinite;
+}
+
+@keyframes snakeOrbitalLeft {
+    0% {
+        left: -100px;
+        bottom: 0;
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    25% {
+        left: 25%;
+        bottom: 150px;
+        transform: translateY(-50px) rotate(15deg);
+    }
+    50% {
+        left: 50%;
+        bottom: 250px;
+        transform: translateY(-100px) rotate(30deg);
+    }
+    75% {
+        left: 75%;
+        bottom: 150px;
+        transform: translateY(-50px) rotate(15deg);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        left: 110%;
+        bottom: 0;
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+@keyframes snakeOrbitalRight {
+    0% {
+        right: -100px;
+        bottom: 0;
+        transform: translateY(0) rotate(0deg) scaleX(-1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    25% {
+        right: 25%;
+        bottom: 180px;
+        transform: translateY(-60px) rotate(-12deg) scaleX(-1);
+    }
+    50% {
+        right: 50%;
+        bottom: 280px;
+        transform: translateY(-110px) rotate(-25deg) scaleX(-1);
+    }
+    75% {
+        right: 75%;
+        bottom: 180px;
+        transform: translateY(-60px) rotate(-12deg) scaleX(-1);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        right: 110%;
+        bottom: 0;
+        transform: translateY(0) rotate(0deg) scaleX(-1);
+        opacity: 0;
+    }
+}
+
+/* Mobile snake animations */
+@media screen and (max-width: 430px) {
+    .orbital-snake {
+        font-size: 40px;
+    }
+
+    @keyframes snakeOrbitalLeft {
+        0% {
+            left: -80px;
+            bottom: 0;
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        25% {
+            left: 25%;
+            bottom: 100px;
+            transform: translateY(-30px) rotate(15deg);
+        }
+        50% {
+            left: 50%;
+            bottom: 150px;
+            transform: translateY(-60px) rotate(30deg);
+        }
+        75% {
+            left: 75%;
+            bottom: 100px;
+            transform: translateY(-30px) rotate(15deg);
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            left: 110%;
+            bottom: 0;
+            transform: translateY(0) rotate(0deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes snakeOrbitalRight {
+        0% {
+            right: -80px;
+            bottom: 0;
+            transform: translateY(0) rotate(0deg) scaleX(-1);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        25% {
+            right: 25%;
+            bottom: 120px;
+            transform: translateY(-40px) rotate(-12deg) scaleX(-1);
+        }
+        50% {
+            right: 50%;
+            bottom: 170px;
+            transform: translateY(-70px) rotate(-25deg) scaleX(-1);
+        }
+        75% {
+            right: 75%;
+            bottom: 120px;
+            transform: translateY(-40px) rotate(-12deg) scaleX(-1);
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            right: 110%;
+            bottom: 0;
+            transform: translateY(0) rotate(0deg) scaleX(-1);
+            opacity: 0;
+        }
+    }
+}
