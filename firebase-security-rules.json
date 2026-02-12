@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "leaderboard": {
+      // Only authenticated users can read the leaderboard
+      ".read": "auth != null",
+
+      "$userId": {
+        // Users can only write to their own entry
+        ".write": "auth != null && ($userId === data.child('uid').val() || !data.exists())",
+
+        // Validate data structure
+        ".validate": "newData.hasChildren(['name', 'score', 'uid']) && newData.child('uid').val() === auth.uid"
+      }
+    }
+  }
+}

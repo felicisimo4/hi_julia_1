@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="css/leaderboard.css">
     <link rel="stylesheet" href="css/tier-hint.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <div class="love-meter" data-love-level="0">
@@ -36,6 +37,42 @@
             <div class="leaderboard-loading">Loading...</div>
         </div>
         <button class="btn-share" id="shareButton">Share your love</button>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-container">
+            <h1 class="login-title">💝 Welcome! 💝</h1>
+            <p class="login-subtitle">Who are you?</p>
+
+            <div class="login-options" id="loginOptions">
+                <button class="login-btn login-julia" data-identity="julia">
+                    Girlfriend Julia 💕
+                </button>
+                <button class="login-btn login-manny" data-identity="manny">
+                    Boyfriend Manny 💙
+                </button>
+                <button class="login-btn login-other" data-identity="other">
+                    Other >:(
+                </button>
+            </div>
+
+            <div class="login-password-container" id="loginPasswordContainer" style="display: none;">
+                <p class="login-password-prompt" id="loginPasswordPrompt">Enter password:</p>
+                <input
+                    type="password"
+                    class="login-password-input"
+                    id="loginPasswordInput"
+                    placeholder="Password"
+                    autocomplete="off"
+                />
+                <div class="login-password-buttons">
+                    <button class="login-btn-back" id="loginBackBtn">← Back</button>
+                    <button class="login-btn-submit" id="loginSubmitBtn">Enter →</button>
+                </div>
+                <p class="login-error" id="loginError"></p>
+            </div>
+        </div>
     </div>
 
     <div class="footer">from boyfriend manny :)</div>
@@ -69,6 +106,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <script type="module" src="js/handlers.js"></script>
 </body>

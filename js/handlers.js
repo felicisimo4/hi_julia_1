@@ -4,6 +4,7 @@ import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS, BUTTON_GROWTH } fro
 import { state } from './state.js';
 import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateHoneymoonDisplay, updateLoveGlow, swapImage, updateLoveMeterColor, createOrbitalSnake, createKneelingAnimation, createFireworksAnimation } from './animations.js';
 import { leaderboard } from './leaderboard.js';
+import { initLogin } from './login.js';
 
 // Global interval for image cycling
 let imageCycleInterval = null;
@@ -277,6 +278,9 @@ export function handleReset() {
 
 // Initialize page
 function init() {
+    // Initialize login system first (shows overlay on page load)
+    initLogin();
+
     // Preload all images for instant switching
     preloadImages();
 
