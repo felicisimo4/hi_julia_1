@@ -68,7 +68,9 @@ export const BUTTON_GROWTH = {
     initialPadding: 12,
     initialFontSize: 16,
     paddingIncrement: 5,
-    fontSizeIncrement: 2
+    fontSizeIncrement: 2,
+    maxPadding: 40, // Stop growing at this size
+    maxFontSize: 32  // Stop growing at this size
 };
 
 export const LOVE_TIERS = {

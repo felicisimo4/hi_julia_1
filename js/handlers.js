@@ -1,6 +1,6 @@
 // Event handlers and initialization
 
-import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS } from './config.js';
+import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS, BUTTON_GROWTH } from './config.js';
 import { state } from './state.js';
 import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateLoveGlow, swapImage } from './animations.js';
 
@@ -93,15 +93,52 @@ export function handleYes() {
 // Handle No button click
 export function handleNo() {
     // Make the Yes button bigger
-    const { padding, fontSize } = state.growButton();
+    const { padding, fontSize, atMaxSize } = state.growButton();
 
     const yesButton = document.getElementById('yesButton');
     yesButton.style.padding = padding + 'px ' + (padding * 2.5) + 'px';
     yesButton.style.fontSize = fontSize + 'px';
 
+    // Add visual effects when at max size
+    if (atMaxSize) {
+        yesButton.classList.add('max-size');
+    }
+
     // Show next pleading message
     const message = state.getNextMessage();
     document.getElementById('submessage').textContent = message;
+}
+
+// Handle Reset button click
+export function handleReset() {
+    // Confirm before resetting
+    const confirmed = confirm('Are you sure you want to reset the love meter? This will clear all progress.');
+
+    if (confirmed) {
+        // Reset state
+        state.reset();
+
+        // Reset UI
+        const yesButton = document.getElementById('yesButton');
+        yesButton.style.padding = '';
+        yesButton.style.fontSize = '';
+        yesButton.classList.remove('max-size');
+
+        // Reset displays
+        updateLoveDisplay(0);
+        updateLoveGlow(0);
+        updateLoveTierHint(0);
+
+        // Reset message
+        document.querySelector('.message').textContent = MESSAGES.initial;
+        document.getElementById('submessage').textContent = '';
+
+        // Restart image cycling
+        startImageCycling();
+
+        // Reload page to ensure clean state
+        location.reload();
+    }
 }
 
 // Initialize page
@@ -125,6 +162,21 @@ function init() {
     // Attach event handlers
     document.getElementById('yesButton').addEventListener('click', handleYes);
     document.querySelector('.btn-no').addEventListener('click', handleNo);
+    document.getElementById('resetButton').addEventListener('click', handleReset);
+
+    // Restore Yes button size if previously grown (from "No" clicks)
+    if (state.noClickCount > 0) {
+        const yesButton = document.getElementById('yesButton');
+        yesButton.style.padding = state.yesPadding + 'px ' + (state.yesPadding * 2.5) + 'px';
+        yesButton.style.fontSize = state.yesFontSize + 'px';
+
+        // Check if at max size and add visual effects
+        const atMaxSize = state.yesPadding >= BUTTON_GROWTH.maxPadding &&
+                         state.yesFontSize >= BUTTON_GROWTH.maxFontSize;
+        if (atMaxSize) {
+            yesButton.classList.add('max-size');
+        }
+    }
 }
 
 // Initialize on DOMContentLoaded

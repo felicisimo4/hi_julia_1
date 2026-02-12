@@ -49,6 +49,53 @@ button {
     background-color: #545b62;
 }
 
+.btn-reset {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    font-size: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-reset:hover {
+    background-color: #5a6268;
+    opacity: 1;
+}
+
+/* Yes button at max size - add visual effects */
+.btn-yes.max-size {
+    animation: rainbowGlow 3s ease-in-out infinite, buttonShake 0.5s ease-in-out infinite;
+    background: linear-gradient(45deg, #dc3545, #ff1493, #dc3545, #ff1493);
+    background-size: 300% 300%;
+}
+
+@keyframes rainbowGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 20px rgba(220, 53, 69, 0.8),
+            0 0 40px rgba(255, 20, 147, 0.6),
+            0 0 60px rgba(220, 53, 69, 0.4);
+    }
+    50% {
+        box-shadow:
+            0 0 30px rgba(255, 20, 147, 0.8),
+            0 0 60px rgba(220, 53, 69, 0.6),
+            0 0 90px rgba(255, 20, 147, 0.4);
+    }
+}
+
+@keyframes buttonShake {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+}
+
 .love-meter {
     position: fixed;
     top: 20px;
@@ -158,6 +205,13 @@ button {
         padding: 8px 12px;
         font-size: 11px;
         max-width: 140px;
+    }
+
+    .btn-reset {
+        padding: 6px 12px;
+        font-size: 10px;
+        bottom: 8px;
+        right: 8px;
     }
 }
 
