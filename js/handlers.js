@@ -211,6 +211,11 @@ function init() {
     leaderboard.getCurrentUser();
     updateLeaderboardDisplay();
 
+    // Listen for real-time leaderboard updates from Firebase
+    window.addEventListener('leaderboardUpdate', () => {
+        updateLeaderboardDisplay();
+    });
+
     // Attach event handlers
     document.getElementById('yesButton').addEventListener('click', handleYes);
     document.querySelector('.btn-no').addEventListener('click', handleNo);

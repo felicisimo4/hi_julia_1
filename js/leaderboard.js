@@ -1,11 +1,63 @@
 // Leaderboard management
 
 import { USER_IDENTITIES } from './config.js';
+import { firebaseConfig, FIREBASE_ENABLED } from './firebase-config.js';
 
 class LeaderboardManager {
     constructor() {
         this.currentUser = null;
         this.scores = this.loadScores();
+        this.firebaseInitialized = false;
+        this.database = null;
+        this.initFirebase();
+    }
+
+    // Initialize Firebase
+    initFirebase() {
+        if (!FIREBASE_ENABLED) {
+            console.log('Firebase disabled - using localStorage only');
+            return;
+        }
+
+        try {
+            // Check if Firebase is loaded
+            if (typeof firebase === 'undefined') {
+                console.error('Firebase SDK not loaded');
+                return;
+            }
+
+            // Initialize Firebase
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+
+            this.database = firebase.database();
+            this.firebaseInitialized = true;
+            console.log('Firebase initialized successfully!');
+
+            // Set up real-time listener
+            this.listenToFirebase();
+        } catch (error) {
+            console.error('Firebase initialization failed:', error);
+            console.log('Falling back to localStorage');
+        }
+    }
+
+    // Listen for real-time updates from Firebase
+    listenToFirebase() {
+        if (!this.firebaseInitialized) return;
+
+        this.database.ref('leaderboard').on('value', (snapshot) => {
+            const firebaseScores = snapshot.val();
+            if (firebaseScores) {
+                this.scores = firebaseScores;
+                // Also update localStorage cache
+                localStorage.setItem('leaderboard', JSON.stringify(firebaseScores));
+                // Update UI
+                const event = new CustomEvent('leaderboardUpdate');
+                window.dispatchEvent(event);
+            }
+        });
     }
 
     // Load scores from localStorage
@@ -22,9 +74,21 @@ class LeaderboardManager {
         };
     }
 
-    // Save scores to localStorage
+    // Save scores to localStorage and Firebase
     saveScores() {
+        // Always save to localStorage (instant, works offline)
         localStorage.setItem('leaderboard', JSON.stringify(this.scores));
+
+        // Also save to Firebase if enabled
+        if (this.firebaseInitialized) {
+            this.database.ref('leaderboard').set(this.scores)
+                .then(() => {
+                    console.log('Scores synced to Firebase!');
+                })
+                .catch((error) => {
+                    console.error('Firebase sync failed:', error);
+                });
+        }
     }
 
     // Get current user identity
@@ -68,14 +132,35 @@ class LeaderboardManager {
     // Update score for current user
     updateScore(newScore) {
         const user = this.getCurrentUser();
+        const oldScore = this.scores[user] || 0;
 
         // Only update if new score is higher
-        if (newScore > this.scores[user]) {
+        if (newScore > oldScore) {
             this.scores[user] = newScore;
-            this.saveScores();
+
+            // Save to localStorage immediately
+            localStorage.setItem('leaderboard', JSON.stringify(this.scores));
+
+            // Use Firebase transaction for atomic update
+            if (this.firebaseInitialized) {
+                const userKey = this.sanitizeKey(user);
+                this.database.ref('leaderboard/' + userKey).transaction((current) => {
+                    // Only update if new score is higher than current
+                    if (current === null || newScore > current) {
+                        return newScore;
+                    }
+                    return current; // Keep existing higher score
+                });
+            }
+
             return true; // Indicates new high score
         }
         return false;
+    }
+
+    // Sanitize Firebase key (remove invalid characters)
+    sanitizeKey(key) {
+        return key.replace(/[.#$\/\[\]]/g, '_');
     }
 
     // Get leaderboard entries sorted by score
