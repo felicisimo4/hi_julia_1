@@ -1,11 +1,27 @@
 // Event handlers and initialization
 
-import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL } from './config.js';
+import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS } from './config.js';
 import { state } from './state.js';
-import { createFloatingOtter, updateLoveDisplay, swapImage } from './animations.js';
+import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, swapImage } from './animations.js';
 
 // Global interval for image cycling
 let imageCycleInterval = null;
+
+// Update love tier hint based on current love count
+function updateLoveTierHint(loveCount) {
+    const hintElement = document.getElementById('loveTierHint');
+
+    if (loveCount < LOVE_TIERS.tier1.threshold) {
+        hintElement.textContent = LOVE_TIERS.tier1.hint;
+        hintElement.style.display = 'block';
+    } else if (loveCount < LOVE_TIERS.tier2.threshold) {
+        hintElement.textContent = LOVE_TIERS.tier2.hint;
+        hintElement.style.display = 'block';
+    } else {
+        hintElement.textContent = LOVE_TIERS.maxTier.message;
+        hintElement.style.display = 'block';
+    }
+}
 
 // Cycle through default images
 function cycleImages() {
@@ -46,9 +62,21 @@ export function handleYes() {
     const newCount = state.incrementLove();
     updateLoveDisplay(newCount);
 
-    // Create floating otter animation
+    // Create appropriate animation based on love tier
     const yesButton = document.getElementById('yesButton');
-    createFloatingOtter(yesButton);
+    if (newCount >= LOVE_TIERS.tier2.threshold) {
+        // 50+ clicks: kissing animation
+        createKissingLove(yesButton);
+    } else if (newCount >= LOVE_TIERS.tier1.threshold) {
+        // 10-49 clicks: otter and sheep
+        createFloatingOtterAndSheep(yesButton);
+    } else {
+        // 1-9 clicks: just otter
+        createFloatingOtter(yesButton);
+    }
+
+    // Update love tier hint
+    updateLoveTierHint(newCount);
 
     // Get the appropriate success message based on click count
     const messageIndex = Math.min(newCount - 1, MESSAGES.successSequence.length - 1);
@@ -81,8 +109,16 @@ function init() {
     const loveCount = state.loadLoveCount();
     updateLoveDisplay(loveCount);
 
-    // Start cycling through images
-    startImageCycling();
+    // Update love tier hint based on current love count
+    updateLoveTierHint(loveCount);
+
+    // Start cycling through images if not yet clicked yes
+    if (loveCount === 0) {
+        startImageCycling();
+    } else {
+        // Show success image if already clicked
+        swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
+    }
 
     // Attach event handlers
     document.getElementById('yesButton').addEventListener('click', handleYes);

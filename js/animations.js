@@ -1,6 +1,6 @@
 // Animation utilities
 
-// Create floating otter animation
+// Create floating otter animation (< 10 clicks)
 export function createFloatingOtter(buttonElement) {
     const buttonRect = buttonElement.getBoundingClientRect();
 
@@ -24,6 +24,77 @@ export function createFloatingOtter(buttonElement) {
     // Remove after animation completes (3 seconds)
     setTimeout(() => {
         otter.remove();
+    }, 3000);
+}
+
+// Create floating otter AND sheep animation (10-49 clicks)
+export function createFloatingOtterAndSheep(buttonElement) {
+    const buttonRect = buttonElement.getBoundingClientRect();
+
+    // Create otter element
+    const otter = document.createElement('div');
+    otter.className = 'floating-otter';
+    otter.textContent = '🦦';
+
+    // Create sheep element
+    const sheep = document.createElement('div');
+    sheep.className = 'floating-sheep';
+    sheep.textContent = '🐑';
+
+    // Calculate positions - sheep slightly to the left, otter slightly to the right
+    const randomOffset = (Math.random() - 0.5) * (buttonRect.width + 100);
+    const centerX = buttonRect.left + buttonRect.width / 2 + randomOffset;
+    const yPosition = buttonRect.top;
+
+    // Position otter (right side)
+    otter.style.left = (centerX + 20) + 'px';
+    otter.style.top = yPosition + 'px';
+
+    // Position sheep (left side)
+    sheep.style.left = (centerX - 20) + 'px';
+    sheep.style.top = yPosition + 'px';
+
+    // Add to body
+    document.body.appendChild(otter);
+    document.body.appendChild(sheep);
+
+    // Remove after animation completes (3 seconds)
+    setTimeout(() => {
+        otter.remove();
+        sheep.remove();
+    }, 3000);
+}
+
+// Create kissing love animation (50+ clicks)
+export function createKissingLove(buttonElement) {
+    const buttonRect = buttonElement.getBoundingClientRect();
+
+    // Create container for the kissing couple
+    const container = document.createElement('div');
+    container.className = 'floating-kiss';
+
+    // Create the kissing emoji combination: 🐑💋🦦
+    const kissingCouple = document.createElement('span');
+    kissingCouple.textContent = '🐑💋🦦';
+    kissingCouple.style.fontSize = 'inherit';
+
+    container.appendChild(kissingCouple);
+
+    // Calculate position
+    const randomOffset = (Math.random() - 0.5) * (buttonRect.width + 100);
+    const xPosition = buttonRect.left + buttonRect.width / 2 + randomOffset;
+    const yPosition = buttonRect.top;
+
+    // Position the kiss
+    container.style.left = xPosition + 'px';
+    container.style.top = yPosition + 'px';
+
+    // Add to body
+    document.body.appendChild(container);
+
+    // Remove after animation completes (3 seconds)
+    setTimeout(() => {
+        container.remove();
     }, 3000);
 }
 

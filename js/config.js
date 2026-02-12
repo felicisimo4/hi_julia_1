@@ -70,3 +70,20 @@ export const BUTTON_GROWTH = {
     paddingIncrement: 5,
     fontSizeIncrement: 2
 };
+
+export const LOVE_TIERS = {
+    tier1: {
+        threshold: 10,
+        name: 'Sheep Unlocked',
+        hint: 'Surprise awaits at 10 clicks! 🎁'
+    },
+    tier2: {
+        threshold: 50,
+        name: 'Kissing Love',
+        hint: 'Surprise awaits at 50 clicks! 💋'
+    },
+    maxTier: {
+        name: 'Maximum Love',
+        message: 'You\'ve unlocked all surprises! 👑'
+    }
+};
