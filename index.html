@@ -80,9 +80,44 @@
         .btn-no:hover {
             background-color: #545b62;
         }
+
+        .love-meter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .love-meter-title {
+            font-size: 14px;
+            color: #d63384;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .love-meter-count {
+            font-size: 32px;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .love-meter-heart {
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
+    <div class="love-meter">
+        <div class="love-meter-title">Love Meter</div>
+        <div class="love-meter-count" id="loveCount">0</div>
+        <div class="love-meter-heart">💕</div>
+    </div>
+
     <div class="container">
         <img id="valentineImage" src="https://via.placeholder.com/400x300/FF69B4/ffffff?text=Be+My+Valentine" alt="Valentine Image">
 
@@ -99,6 +134,7 @@
         let yesPadding = 12;
         let yesFontSize = 16;
         let messageIndex = 0;
+        let loveCount = 0;
 
         const pleadingMessages = [
             "Are you sure you don't want to be my valentine? Please be my valentine.",
@@ -109,7 +145,34 @@
             "The Yes button is getting bigger for a reason! 💝"
         ];
 
+        // Load love count from localStorage on page load
+        function loadLoveCount() {
+            const savedCount = localStorage.getItem('loveCount');
+            loveCount = savedCount ? parseInt(savedCount) : 0;
+            updateLoveDisplay();
+        }
+
+        // Update the love meter display
+        function updateLoveDisplay() {
+            document.getElementById('loveCount').textContent = loveCount;
+        }
+
+        // Save love count to localStorage
+        function saveLoveCount() {
+            localStorage.setItem('loveCount', loveCount);
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            loadLoveCount();
+        };
+
         function handleYes() {
+            // Increment love meter
+            loveCount++;
+            updateLoveDisplay();
+            saveLoveCount();
+
             // Change the image
             document.getElementById('valentineImage').src = 'https://via.placeholder.com/400x300/FF1493/ffffff?text=Thank+You!+%E2%9D%A4%EF%B8%8F';
             // Update message
