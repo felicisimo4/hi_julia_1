@@ -89,3 +89,9 @@ export const LOVE_TIERS = {
         message: 'You\'ve unlocked all surprises! 👑'
     }
 };
+
+export const USER_IDENTITIES = {
+    JULIA: 'Girlfriend Julia',
+    MANNY: 'Boyfriend Manny',
+    OTHER: 'Other >:('
+};

@@ -3,6 +3,7 @@
 import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS, BUTTON_GROWTH } from './config.js';
 import { state } from './state.js';
 import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateLoveGlow, swapImage } from './animations.js';
+import { leaderboard } from './leaderboard.js';
 
 // Global interval for image cycling
 let imageCycleInterval = null;
@@ -20,6 +21,42 @@ function updateLoveTierHint(loveCount) {
     } else {
         hintElement.textContent = LOVE_TIERS.maxTier.message;
         hintElement.style.display = 'block';
+    }
+}
+
+// Update leaderboard display
+function updateLeaderboardDisplay() {
+    const listElement = document.getElementById('leaderboardList');
+    listElement.innerHTML = leaderboard.renderLeaderboard();
+}
+
+// Handle Share button click
+export function handleShare() {
+    const loveCount = state.loveCount;
+    const userName = leaderboard.getCurrentUser();
+
+    const shareData = {
+        title: 'For Girlfriend Julia :3',
+        text: `${userName} has ${loveCount} love points! 💕\n\nCan you beat my score?`,
+        url: window.location.href
+    };
+
+    // Try Web Share API (works on mobile)
+    if (navigator.share) {
+        navigator.share(shareData)
+            .then(() => console.log('Shared successfully!'))
+            .catch((error) => console.log('Share failed:', error));
+    } else {
+        // Fallback: Copy to clipboard
+        const shareText = `${shareData.text}\n\n${shareData.url}`;
+        navigator.clipboard.writeText(shareText)
+            .then(() => {
+                alert('Link copied to clipboard! 📋\n\nShare it with Julia! 💕');
+            })
+            .catch(() => {
+                // Final fallback: Show text
+                prompt('Share this link:', shareData.url);
+            });
     }
 }
 
@@ -62,6 +99,17 @@ export function handleYes() {
     const newCount = state.incrementLove();
     updateLoveDisplay(newCount);
     updateLoveGlow(newCount);
+
+    // Update leaderboard
+    const isNewHigh = leaderboard.updateScore(newCount);
+    updateLeaderboardDisplay();
+
+    // Celebrate new high score
+    if (isNewHigh && newCount > 1) {
+        setTimeout(() => {
+            document.getElementById('submessage').textContent = '🎉 New personal best!';
+        }, 1000);
+    }
 
     // Create appropriate animation based on love tier
     const yesButton = document.getElementById('yesButton');
@@ -159,10 +207,15 @@ function init() {
         swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
     }
 
+    // Initialize user identity and leaderboard
+    leaderboard.getCurrentUser();
+    updateLeaderboardDisplay();
+
     // Attach event handlers
     document.getElementById('yesButton').addEventListener('click', handleYes);
     document.querySelector('.btn-no').addEventListener('click', handleNo);
     document.getElementById('resetButton').addEventListener('click', handleReset);
+    document.getElementById('shareButton').addEventListener('click', handleShare);
 
     // Restore Yes button size if previously grown (from "No" clicks)
     if (state.noClickCount > 0) {
