@@ -1,0 +1,4 @@
+# User-uploaded custom images
+assets/images/custom/*
+!assets/images/custom/.gitkeep
+!assets/images/custom/README.md
