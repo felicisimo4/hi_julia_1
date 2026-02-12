@@ -32,6 +32,28 @@ export const IMAGE_CYCLE_INTERVAL = 3000; // Cycle through images every 3 second
 export const MESSAGES = {
     initial: "Will you be my valentine this year?",
     success: "Yay! I knew you would say yes! ❤️",
+    successSequence: [
+        "Yay! I knew you would say yes! ❤️",
+        "You make me so happy! Click again! 💕",
+        "I love you more with each click! 😍",
+        "You're the best valentine ever! Keep going! 🌹",
+        "My heart is so full right now! 💗",
+        "I can't stop smiling! Click more! 😊",
+        "You + Me = Perfect! Keep clicking! 💑",
+        "Every click makes me love you more! 💖",
+        "You're amazing! Don't stop! ✨",
+        "Best. Valentine. EVER! 🎉",
+        "I'm the luckiest person alive! 💝",
+        "My love for you grows with every click! 🌺",
+        "You light up my whole world! ☀️",
+        "I could click Yes to you forever! 💫",
+        "You're my everything! Keep going! 💞",
+        "This is what true love feels like! 🥰",
+        "Can't. Stop. Loving. You! 💘",
+        "You make every day Valentine's Day! 🌸",
+        "Infinity clicks wouldn't be enough! ♾️",
+        "You're my forever valentine! 👑"
+    ],
     pleading: [
         "Are you sure you don't want to be my valentine? Please be my valentine.",
         "But... but... I really want you to say yes! 🥺",

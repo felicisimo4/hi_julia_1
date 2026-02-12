@@ -35,8 +35,12 @@ function stopImageCycling() {
 
 // Handle Yes button click
 export function handleYes() {
-    // Stop image cycling
-    stopImageCycling();
+    // Stop image cycling on first click
+    if (state.loveCount === 0) {
+        stopImageCycling();
+        // Change to success image on first click
+        swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
+    }
 
     // Increment love meter
     const newCount = state.incrementLove();
@@ -46,11 +50,12 @@ export function handleYes() {
     const yesButton = document.getElementById('yesButton');
     createFloatingOtter(yesButton);
 
-    // Change the image
-    swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
+    // Get the appropriate success message based on click count
+    const messageIndex = Math.min(newCount - 1, MESSAGES.successSequence.length - 1);
+    const successMessage = MESSAGES.successSequence[messageIndex];
 
-    // Update message
-    document.querySelector('.message').textContent = MESSAGES.success;
+    // Update message with escalating excitement
+    document.querySelector('.message').textContent = successMessage;
 
     // Clear submessage
     document.getElementById('submessage').textContent = '';
