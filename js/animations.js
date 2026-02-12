@@ -103,6 +103,11 @@ export function updateLoveDisplay(count) {
     document.getElementById('loveCount').textContent = count;
 }
 
+// Update honeymoon meter display
+export function updateHoneymoonDisplay(count) {
+    document.getElementById('honeymoonCount').textContent = count;
+}
+
 // Update container glow effect based on love count
 export function updateLoveGlow(count) {
     const container = document.querySelector('.container');

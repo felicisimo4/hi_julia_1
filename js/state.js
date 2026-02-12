@@ -8,6 +8,7 @@ class ValentineState {
         this.yesFontSize = BUTTON_GROWTH.initialFontSize;
         this.messageIndex = 0;
         this.loveCount = 0;
+        this.honeymoonCount = 0; // Temporary count for current emulation
         this.currentImageIndex = 0;
         this.noClickCount = 0; // Track "No" clicks for button size
     }
@@ -40,8 +41,19 @@ class ValentineState {
     // Increment love count
     incrementLove() {
         this.loveCount++;
+        this.honeymoonCount++; // Also increment honeymoon counter
         this.saveLoveCount();
         return this.loveCount;
+    }
+
+    // Get honeymoon count
+    getHoneymoonCount() {
+        return this.honeymoonCount;
+    }
+
+    // Reset honeymoon count (for emulation mode)
+    resetHoneymoon() {
+        this.honeymoonCount = 0;
     }
 
     // Grow the Yes button (caps at max size)

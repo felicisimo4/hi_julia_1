@@ -2,7 +2,7 @@
 
 import { IMAGES, MESSAGES, IMAGE_CYCLE_INTERVAL, LOVE_TIERS, BUTTON_GROWTH } from './config.js';
 import { state } from './state.js';
-import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateLoveGlow, swapImage } from './animations.js';
+import { createFloatingOtter, createFloatingOtterAndSheep, createKissingLove, updateLoveDisplay, updateHoneymoonDisplay, updateLoveGlow, swapImage } from './animations.js';
 import { leaderboard } from './leaderboard.js';
 
 // Global interval for image cycling
@@ -95,9 +95,11 @@ export function handleYes() {
         swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
     }
 
-    // Increment love meter
+    // Increment both love meter and honeymoon meter
     const newCount = state.incrementLove();
+    const honeymoonCount = state.getHoneymoonCount();
     updateLoveDisplay(newCount);
+    updateHoneymoonDisplay(honeymoonCount);
     updateLoveGlow(newCount);
 
     // Update leaderboard
@@ -157,35 +159,47 @@ export function handleNo() {
     document.getElementById('submessage').textContent = message;
 }
 
-// Handle Reset button click
+// Handle Emulate First Yes button click
 export function handleReset() {
-    // Confirm before resetting
-    const confirmed = confirm('Are you sure you want to reset the love meter? This will clear all progress.');
+    // Confirm before emulating
+    const confirmed = confirm('Experience the first Yes again?\n\nYour leaderboard score will be kept!\nEach new Yes will still add to your total.');
 
     if (confirmed) {
-        // Reset state
-        state.reset();
+        // Save current love count (don't reset it!)
+        const currentLoveCount = state.loveCount;
 
-        // Reset UI
+        // Reset honeymoon meter to 0 (temporary emulation counter)
+        state.resetHoneymoon();
+        updateHoneymoonDisplay(0);
+
+        // Reset UI state only (not the love count)
+        state.yesPadding = BUTTON_GROWTH.initialPadding;
+        state.yesFontSize = BUTTON_GROWTH.initialFontSize;
+        state.messageIndex = 0;
+        state.noClickCount = 0;
+        localStorage.setItem('noClickCount', 0);
+
+        // Reset UI elements
         const yesButton = document.getElementById('yesButton');
         yesButton.style.padding = '';
         yesButton.style.fontSize = '';
         yesButton.classList.remove('max-size');
 
-        // Reset displays
-        updateLoveDisplay(0);
+        // Reset container glow to initial (but keep leaderboard intact)
         updateLoveGlow(0);
-        updateLoveTierHint(0);
 
-        // Reset message
+        // Reset messages to initial state
         document.querySelector('.message').textContent = MESSAGES.initial;
         document.getElementById('submessage').textContent = '';
 
         // Restart image cycling
         startImageCycling();
 
-        // Reload page to ensure clean state
-        location.reload();
+        // Update hint to show from beginning
+        updateLoveTierHint(currentLoveCount);
+
+        // Note: Love meter and leaderboard stay at current values!
+        // Next Yes click will increment from current count
     }
 }
 
@@ -194,6 +208,7 @@ function init() {
     // Load love count from localStorage
     const loveCount = state.loadLoveCount();
     updateLoveDisplay(loveCount);
+    updateHoneymoonDisplay(0); // Honeymoon always starts at 0
     updateLoveGlow(loveCount);
 
     // Update love tier hint based on current love count
