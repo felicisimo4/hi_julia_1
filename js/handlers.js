@@ -192,6 +192,11 @@ export function handleNo() {
     // Show next pleading message
     const message = state.getNextMessage();
     document.getElementById('submessage').textContent = message;
+
+    // Cycle to next image when No is clicked (only if haven't clicked Yes yet in current session)
+    if (state.honeymoonCount === 0) {
+        cycleImages();
+    }
 }
 
 // Handle Emulate First Yes button click
@@ -227,8 +232,10 @@ export function handleReset() {
         document.querySelector('.message').textContent = MESSAGES.initial;
         document.getElementById('submessage').textContent = '';
 
-        // Restart image cycling
-        startImageCycling();
+        // Set a random starting image (no auto-cycling)
+        state.currentImageIndex = Math.floor(Math.random() * IMAGES.defaultImages.length);
+        const initialImage = IMAGES.defaultImages[state.currentImageIndex];
+        swapImage('valentineImage', initialImage, IMAGES.defaultFallback);
 
         // Update hint to show from beginning
         updateLoveTierHint(currentLoveCount);
