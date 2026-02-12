@@ -1,24 +1,14 @@
 // Firebase Configuration
-// Replace with your actual Firebase config from Firebase Console
 
 export const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDNfIrzqmyaXqU38SehHAwte_6Uw2exB94",
+    authDomain: "hi-julia-1-d70c1.firebaseapp.com",
+    databaseURL: "https://hi-julia-1-d70c1-default-rtdb.firebaseio.com",
+    projectId: "hi-julia-1-d70c1",
+    storageBucket: "hi-julia-1-d70c1.firebasestorage.app",
+    messagingSenderId: "123239180766",
+    appId: "1:123239180766:web:a9151f1ec7cb60cdad154f"
 };
 
-// Set to true once you've added your Firebase config
-export const FIREBASE_ENABLED = false;
-
-// Instructions to get your config:
-// 1. Go to https://console.firebase.google.com/
-// 2. Create a new project (or use existing)
-// 3. Click "Add app" → Web (</> icon)
-// 4. Copy the config object
-// 5. Paste it above (replace the placeholder values)
-// 6. Set FIREBASE_ENABLED = true
-// 7. Save this file
+// Firebase is now enabled for cross-device sync
+export const FIREBASE_ENABLED = true;
