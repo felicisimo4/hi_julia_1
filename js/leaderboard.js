@@ -180,16 +180,13 @@ class LeaderboardManager {
     // Render leaderboard HTML
     renderLeaderboard() {
         const leaderboard = this.getLeaderboard();
-        const medals = ['🥇', '🥈', '🥉'];
 
         return leaderboard.map((entry, index) => {
-            const medal = index < 3 ? medals[index] : '';
             const currentClass = entry.isCurrent ? 'current-user' : '';
 
             return `
                 <div class="leaderboard-entry">
                     <span class="leaderboard-name ${currentClass}">
-                        <span class="leaderboard-medal">${medal}</span>
                         ${entry.name}
                     </span>
                     <span class="leaderboard-score">${entry.score} 💕</span>
