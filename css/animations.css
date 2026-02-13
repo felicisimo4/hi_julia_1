@@ -172,56 +172,56 @@
     0% {
         left: -100px;
         bottom: 0;
-        transform: translateY(0) rotate(-45deg);
+        transform: translateY(0) rotate(-45deg) scaleX(-1);
         opacity: 0;
     }
     5% {
         opacity: 1;
-        transform: translateY(0) rotate(-30deg);
+        transform: translateY(0) rotate(-30deg) scaleX(-1);
     }
     15% {
         left: 15%;
         bottom: calc(var(--peak-height) * 0.55);
-        transform: translateY(0) rotate(-10deg);
+        transform: translateY(0) rotate(-10deg) scaleX(-1);
     }
     25% {
         left: 25%;
         bottom: calc(var(--peak-height) * 0.8);
-        transform: translateY(0) rotate(5deg);
+        transform: translateY(0) rotate(5deg) scaleX(-1);
     }
     35% {
         left: 35%;
         bottom: calc(var(--peak-height) * 0.95);
-        transform: translateY(0) rotate(15deg);
+        transform: translateY(0) rotate(15deg) scaleX(-1);
     }
     50% {
         left: 50%;
         bottom: var(--peak-height);
-        transform: translateY(0) rotate(20deg);
+        transform: translateY(0) rotate(20deg) scaleX(-1);
     }
     65% {
         left: 65%;
         bottom: calc(var(--peak-height) * 0.95);
-        transform: translateY(0) rotate(25deg);
+        transform: translateY(0) rotate(25deg) scaleX(-1);
     }
     75% {
         left: 75%;
         bottom: calc(var(--peak-height) * 0.8);
-        transform: translateY(0) rotate(35deg);
+        transform: translateY(0) rotate(35deg) scaleX(-1);
     }
     85% {
         left: 85%;
         bottom: calc(var(--peak-height) * 0.55);
-        transform: translateY(0) rotate(50deg);
+        transform: translateY(0) rotate(50deg) scaleX(-1);
     }
     95% {
         opacity: 1;
-        transform: translateY(0) rotate(60deg);
+        transform: translateY(0) rotate(60deg) scaleX(-1);
     }
     100% {
         left: 110%;
         bottom: 0;
-        transform: translateY(0) rotate(75deg);
+        transform: translateY(0) rotate(75deg) scaleX(-1);
         opacity: 0;
     }
 }
@@ -231,56 +231,56 @@
     0% {
         right: -100px;
         bottom: 0;
-        transform: translateY(0) rotate(45deg) scaleX(-1);
+        transform: translateY(0) rotate(45deg);
         opacity: 0;
     }
     5% {
         opacity: 1;
-        transform: translateY(0) rotate(30deg) scaleX(-1);
+        transform: translateY(0) rotate(30deg);
     }
     15% {
         right: 15%;
         bottom: calc(var(--peak-height) * 0.55);
-        transform: translateY(0) rotate(10deg) scaleX(-1);
+        transform: translateY(0) rotate(10deg);
     }
     25% {
         right: 25%;
         bottom: calc(var(--peak-height) * 0.8);
-        transform: translateY(0) rotate(-5deg) scaleX(-1);
+        transform: translateY(0) rotate(-5deg);
     }
     35% {
         right: 35%;
         bottom: calc(var(--peak-height) * 0.95);
-        transform: translateY(0) rotate(-15deg) scaleX(-1);
+        transform: translateY(0) rotate(-15deg);
     }
     50% {
         right: 50%;
         bottom: var(--peak-height);
-        transform: translateY(0) rotate(-20deg) scaleX(-1);
+        transform: translateY(0) rotate(-20deg);
     }
     65% {
         right: 65%;
         bottom: calc(var(--peak-height) * 0.95);
-        transform: translateY(0) rotate(-25deg) scaleX(-1);
+        transform: translateY(0) rotate(-25deg);
     }
     75% {
         right: 75%;
         bottom: calc(var(--peak-height) * 0.8);
-        transform: translateY(0) rotate(-35deg) scaleX(-1);
+        transform: translateY(0) rotate(-35deg);
     }
     85% {
         right: 85%;
         bottom: calc(var(--peak-height) * 0.55);
-        transform: translateY(0) rotate(-50deg) scaleX(-1);
+        transform: translateY(0) rotate(-50deg);
     }
     95% {
         opacity: 1;
-        transform: translateY(0) rotate(-60deg) scaleX(-1);
+        transform: translateY(0) rotate(-60deg);
     }
     100% {
         right: 110%;
         bottom: 0;
-        transform: translateY(0) rotate(-75deg) scaleX(-1);
+        transform: translateY(0) rotate(-75deg);
         opacity: 0;
     }
 }

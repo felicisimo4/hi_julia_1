@@ -153,7 +153,7 @@ export function updateLoveMeterColor(count) {
 
 // Create kneeling devotion animation (2000+ clicks)
 export function createKneelingAnimation() {
-    const kneelingEmojis = ['🧎', '🧎‍♂️', '🧎‍♀️', '🙇', '🙇‍♂️', '🙇‍♀️'];
+    const kneelingEmojis = ['🧎‍♂️', '🙇‍♂️'];
 
     // Create 3-6 random kneeling emojis at random positions
     const count = Math.floor(Math.random() * 4) + 3; // 3 to 6 emojis

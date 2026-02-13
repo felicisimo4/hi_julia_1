@@ -164,27 +164,27 @@ export function handleYes() {
         }, 1000);
     }
 
-    // Create appropriate animation based on love tier
+    // Create appropriate animation based on honeymoon tier (session progress)
     const yesButton = document.getElementById('yesButton');
-    if (newCount >= LOVE_TIERS.tier5.threshold) {
+    if (honeymoonCount >= LOVE_TIERS.tier5.threshold) {
         // 5000+ clicks: fireworks + all previous animations
         createFireworksAnimation();
         createKneelingAnimation();
         createOrbitalSnake();
         createKissingLove(yesButton);
-    } else if (newCount >= LOVE_TIERS.tier4.threshold) {
+    } else if (honeymoonCount >= LOVE_TIERS.tier4.threshold) {
         // 2000+ clicks: kneeling + snakes + kissing
         createKneelingAnimation();
         createOrbitalSnake();
         createKissingLove(yesButton);
-    } else if (newCount >= LOVE_TIERS.tier3.threshold) {
+    } else if (honeymoonCount >= LOVE_TIERS.tier3.threshold) {
         // 500+ clicks: snakes orbital animation + kissing
         createOrbitalSnake();
         createKissingLove(yesButton);
-    } else if (newCount >= LOVE_TIERS.tier2.threshold) {
+    } else if (honeymoonCount >= LOVE_TIERS.tier2.threshold) {
         // 50+ clicks: kissing animation
         createKissingLove(yesButton);
-    } else if (newCount >= LOVE_TIERS.tier1.threshold) {
+    } else if (honeymoonCount >= LOVE_TIERS.tier1.threshold) {
         // 10-49 clicks: otter and sheep
         createFloatingOtterAndSheep(yesButton);
     } else {
@@ -192,11 +192,11 @@ export function handleYes() {
         createFloatingOtter(yesButton);
     }
 
-    // Update love tier hint
+    // Update love tier hint (based on total progress)
     updateLoveTierHint(newCount);
 
-    // Get the appropriate success message based on click count
-    const messageIndex = Math.min(newCount - 1, MESSAGES.successSequence.length - 1);
+    // Get the appropriate success message based on honeymoon count (session progress)
+    const messageIndex = Math.min(honeymoonCount - 1, MESSAGES.successSequence.length - 1);
     const successMessage = MESSAGES.successSequence[messageIndex];
 
     // Update message with escalating excitement
@@ -227,6 +227,33 @@ export function handleNo() {
     // Cycle to next image when No is clicked (only if haven't clicked Yes yet in current session)
     if (state.honeymoonCount === 0) {
         cycleImages();
+    }
+}
+
+// Handle Catch Up Honeymoon button click
+export function handleCatchup() {
+    // Confirm before catching up
+    const currentLove = state.loveCount;
+    const currentHoneymoon = state.honeymoonCount;
+
+    if (currentHoneymoon >= currentLove) {
+        alert('Honeymoon meter is already caught up! 💕\n\nHoneymoon: ' + currentHoneymoon + '\nTotal Love: ' + currentLove);
+        return;
+    }
+
+    const confirmed = confirm('Catch up the honeymoon meter to match total love?\n\nHoneymoon: ' + currentHoneymoon + ' → ' + currentLove + '\nTotal Love: ' + currentLove + ' (unchanged)\n\nThis will skip the romantic progression and jump to current tier.');
+
+    if (confirmed) {
+        // Sync honeymoon meter to match total love meter
+        state.honeymoonCount = currentLove;
+        updateHoneymoonDisplay(currentLove);
+
+        // Show success image if love count > 0
+        if (currentLove > 0) {
+            swapImage('valentineImage', IMAGES.success, IMAGES.successFallback);
+        }
+
+        console.log('Honeymoon meter caught up:', currentLove);
     }
 }
 
@@ -332,6 +359,7 @@ function init() {
     document.getElementById('yesButton').addEventListener('click', handleYes);
     document.querySelector('.btn-no').addEventListener('click', handleNo);
     document.getElementById('resetButton').addEventListener('click', handleReset);
+    document.getElementById('catchupButton').addEventListener('click', handleCatchup);
     document.getElementById('shareButton').addEventListener('click', handleShare);
     document.getElementById('tierHintHeader').addEventListener('click', toggleTierHint);
 
